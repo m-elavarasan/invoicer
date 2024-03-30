@@ -17,9 +17,10 @@
                 </FloatLabel>
             </div>
             <div class="login-signin">
-                <Button label="Sign In" @click="test()" />
+                <Button label="Sign In" @click="onLogin()" />
             </div>
         </div>
+        <Toast />
     </div>
 </template>
 
