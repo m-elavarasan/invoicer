@@ -1,25 +1,35 @@
-import { defineStore } from 'pinia';
-import authApi from '../api/authApi';
+import { defineStore } from 'pinia'
+import authApi from '../api/authApi'
 
-export const useAuthStore = defineStore({
-  id: 'auth',
+export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLoggedIn: false,
-    token: '',
+    token: ''
   }),
   actions: {
     async loginUser(email, password) {
-      const response = await authApi.userLogin(email, password)
+      await authApi.userLogin(email, password)
+        .then(res => {
+          this.isLoggedIn = true
+          sessionStorage.setItem('authToken', res.token)
+          this.token = res.token
+        })
         .catch(error => {
-          console.error('Error logging in:', error);
-          throw error;
-        });
-      this.isLoggedIn = true;
-      this.token = response.token;
+          console.error('Error logging in:', error)
+          throw error
+        })
     },
     logout() {
-      this.isLoggedIn = false;
-      this.token = '';
+      this.isLoggedIn = false
+      sessionStorage.removeItem('authToken')
+      this.token = ''
     },
-  },
-});
+    checkSessionStorage() {
+      const localToken = sessionStorage.getItem('authToken')
+      if (localToken) {
+        this.isAuthenticated = true
+        this.token = localToken
+      }
+    },
+  }
+})
