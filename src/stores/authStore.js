@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', {
     checkSessionStorage() {
       const localToken = sessionStorage.getItem('authToken')
       if (localToken) {
-        this.isAuthenticated = true
+        this.isLoggedIn = true
         this.token = localToken
       }
     },

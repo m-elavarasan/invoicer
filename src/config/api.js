@@ -15,10 +15,11 @@ const API = {
       const response = await fetch(`${BASE_URL}/${path}`, {
         headers: getDefaultHeaders(),
       });
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        return await response.json();
+      } else {
         throw new Error('Failed to fetch data');
       }
-      return await response.json();
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
@@ -32,10 +33,15 @@ const API = {
         headers: getDefaultHeaders(),
         body: JSON.stringify(data),
       });
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        const responseBody = await response.text();
+        if (!responseBody) {
+          return {};
+        }
+        return JSON.parse(responseBody);
+      } else {
         throw new Error('Failed to post data');
       }
-      return await response.json();
     } catch (error) {
       console.error('Error posting data:', error);
       throw error;
@@ -49,10 +55,11 @@ const API = {
         headers: getDefaultHeaders(),
         body: JSON.stringify(data),
       });
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        return await response.json();
+      } else {
         throw new Error('Failed to update data');
       }
-      return await response.json();
     } catch (error) {
       console.error('Error updating data:', error);
       throw error;
@@ -65,16 +72,16 @@ const API = {
         method: 'DELETE',
         headers: getDefaultHeaders(),
       });
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        return await response.json();
+      } else {
         throw new Error('Failed to delete data');
       }
-      return await response.json();
     } catch (error) {
       console.error('Error deleting data:', error);
       throw error;
     }
   },
-
 };
 
 export default API;
