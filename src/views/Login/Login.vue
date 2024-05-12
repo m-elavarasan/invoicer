@@ -13,6 +13,7 @@
       <Button type="button" @click="onLogin">Login</Button>
       <p class="forgot-password">Forgot your password?</p>
     </div>
+    <Toast/>
   </div>
 </template>
 <script src="./login.js"></script>

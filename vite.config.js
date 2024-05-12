@@ -6,7 +6,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import VueDevTools from 'vite-plugin-vue-devtools'
 
 import Components from 'unplugin-vue-components/vite';
-import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
+import { PrimeVueResolver } from 'unplugin-vue-components/resolvers';
+import { commonProxy } from './dev-config/proxy-config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,6 +21,12 @@ export default defineConfig({
       ]
     })
   ],
+  server: {
+    host: 'localhost',
+    port: 8089,
+    proxy: commonProxy
+  },
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

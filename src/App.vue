@@ -1,6 +1,6 @@
 <script>
 import { RouterView } from 'vue-router'
-import { useAuthStore } from './stores/authStore'
+import { useAuthStore } from '@/stores/authStore'
 import { mapActions } from 'pinia'
 
 export default {

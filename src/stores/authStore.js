@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import authApi from '../api/authApi'
+import authApi from '@/api/authApi'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -7,16 +7,16 @@ export const useAuthStore = defineStore('auth', {
     token: ''
   }),
   actions: {
-    async loginUser(email, password) {
-      await authApi.userLogin(email, password)
-        .then(res => {
+      loginUser({ data, success, fail } = {}) {
+        authApi.userLogin(data).then(res => {
+          success && success(res?.body)
+          if(res.body){
           this.isLoggedIn = true
-          sessionStorage.setItem('authToken', res.token)
-          this.token = res.token
-        })
-        .catch(error => {
-          console.error('Error logging in:', error)
-          throw error
+          sessionStorage.setItem('authToken', res.body.token)
+          this.token = res.body.token
+          }
+        }, res => {
+          fail && fail(res)
         })
     },
     logout() {

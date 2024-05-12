@@ -22,20 +22,28 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
+      password: ""
     }
   },
   methods: {
     ...mapActions(useAuthStore, ['loginUser']),
     onLogin() {
-      this.loginUser({ email: this.email, password: this.password })
-        .then(() => {
+      const payLoad = {
+        email: this.email,
+        password: this.password
+      }
+      this.loginUser({
+        data: payLoad,
+        success: (res) => {
           this.$toast.add({ severity: 'success', summary: 'success', detail: 'Login Successfull', life: 3000 })
           this.$router.push({ name: 'home' })
-        })
-        .catch(error => {
-          console.error('Login failed:', error)
-        })
+        },
+        fail: (res) => {
+          this.email = ""
+          this.password = "",
+            this.$toast.add({ severity: 'error', summary: 'Login Fail', detail: res.message, life: 3000 });
+        }
+      })
     }
-  },
+  }
 }

@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:3000/v1/api';
+// const BASE_URL = 'http://localhost:3000/v1/api';
+const BASE_URL = 'https://invoicer-backend-17fq.onrender.com/v1/api';
 
 const getDefaultHeaders = () => {
   const token = localStorage.getItem('token');
